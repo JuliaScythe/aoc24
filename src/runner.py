@@ -3,7 +3,7 @@ import importlib
 from rich.console import Console
 console = Console()
 
-DAY = 1
+DAY = 4
 
 def solve_1(inp):
     pass
