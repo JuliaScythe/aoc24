@@ -1,9 +1,10 @@
 import time
 import importlib
 from rich.console import Console
+
 console = Console()
 
-DAY = 4
+DAY = 5
 
 def solve_1(inp):
     pass

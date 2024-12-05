@@ -34,12 +34,10 @@ class Grid:
         return self.get(self.x, self.y)
 
     def adj(self, dir):
-        oX = self.x
-        oY = self.y
+        self.push()
         self.move(*dir.value)
         val = self.get()
-        self.x = oX
-        self.y = oY
+        self.pop()
         return val
     
     def move(self, dx, dy):
@@ -58,24 +56,24 @@ class Grid:
             self.tags[(x,y)].append(obj)
     
     def get_cardinal_words(self, length=1):
-        oX = self.x
-        oY = self.y
+        self.push()
         words = {}
         for dir in Direction:
-            self.x = oX
-            self.y = oY
+            self.pop()
+            self.push()
             word = [self.at()]
             for i in range(length-1):
                 self.move(*dir.value)
                 word.append(self.at())
             words[dir] = word
-        self.x = oX
-        self.y = oY
+        self.pop()
         return words
     
     def for_each(self, f):
+        self.push()
         for iX, row in enumerate(self.backer):
             for iY, col in enumerate(row):
                 self.x = iX
                 self.y = iY
                 f(self)
+        self.pop()
