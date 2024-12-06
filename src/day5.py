@@ -1,4 +1,3 @@
-import time
 from rich.console import Console
 from functools import cmp_to_key
 console = None # filled in by runner
@@ -10,7 +9,7 @@ def parse_rules(inp):
         if line == "\n":
             section_break = i
             break
-        # line = "XX|YY"
+        # line = "XX|YY\n"
         left = int(line[0:2])
         right = int(line[3:5])
         if left not in pages_rules:
@@ -33,7 +32,7 @@ def solve_1(inp):
 
 def is_line_good(nline, pages_rules):
     seen = []
-    for i, entry in enumerate(nline):
+    for entry in nline:
         if entry not in pages_rules:
             seen.append(entry)
             continue # no rules relating to this page

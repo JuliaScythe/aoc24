@@ -10,6 +10,11 @@ class Direction(Enum):
     WEST = (-1, 0)
     NORTHWEST = (-1, -1)
 
+    def rotate(self, amount):
+        variants = [d for d in Direction]
+        idx = variants.index(self)
+        return variants[(idx + (amount // 45)) % len(variants)] 
+
 class Grid:
     def __init__(self, backer, default=' '):
         self.backer = backer
@@ -71,9 +76,23 @@ class Grid:
     
     def for_each(self, f):
         self.push()
-        for iX, row in enumerate(self.backer):
-            for iY, col in enumerate(row):
+        for iY, row in enumerate(self.backer):
+            for iX, col in enumerate(row):
                 self.x = iX
                 self.y = iY
                 f(self)
         self.pop()
+    
+    def find(self, target):
+        for y, row in enumerate(self.backer):
+            for x, cell in enumerate(row):
+                if cell == target:
+                    return x,y
+        return None, None
+
+    def inbounds(self, x=None, y=None):
+        if x is None:
+            x = self.x
+        if y is None:
+            y = self.y
+        return 0 <= x < len(self.backer[0]) and (0 <= y < len(self.backer))

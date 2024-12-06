@@ -4,7 +4,7 @@ from rich.console import Console
 
 console = Console()
 
-DAY = 5
+DAY = 6
 
 def solve_1(inp):
     pass
