@@ -17,7 +17,7 @@ class Direction(Enum):
 
 class Grid:
     def __init__(self, backer, default=' '):
-        self.backer = backer
+        self.backer = list(map(lambda x: x.strip(), backer))
         self.default = default
         self.x = 0
         self.y = 0
@@ -89,6 +89,13 @@ class Grid:
                 if cell == target:
                     return x,y
         return None, None
+    
+    def find_all(self, target):
+        for y, row in enumerate(self.backer):
+            for x, cell in enumerate(row):
+                if cell == target:
+                    yield x,y
+        return
 
     def inbounds(self, x=None, y=None):
         if x is None:
@@ -96,3 +103,11 @@ class Grid:
         if y is None:
             y = self.y
         return 0 <= x < len(self.backer[0]) and (0 <= y < len(self.backer))
+    
+    def __repr__(self):
+        repr_str = f"Grid: {len(self.backer[0])} x {len(self.backer)}, Default: '{self.default}'\n"
+        for row in self.backer:
+            repr_str += str(row) + "\n"
+        repr_str += f"Tags: {self.tags}"
+
+        return repr_str

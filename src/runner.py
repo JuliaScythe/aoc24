@@ -4,7 +4,7 @@ from rich.console import Console
 
 console = Console()
 
-DAY = 6
+DAY = 11
 
 def solve_1(inp):
     pass
@@ -22,18 +22,28 @@ def solve(day=DAY):
     with open("inputs/input" + str(day)) as f:
         i = f.readlines()
 
-    with console.status("[blue]Solving part 1...", spinner="dots"):
+    if hasattr(solver, "_no_status_1"):
         t_start = time.perf_counter()
         res = solver.solve_1(i)
         t_end = time.perf_counter()
-    
+    else:
+        with console.status("[blue]Solving part 1...", spinner="dots"):
+            t_start = time.perf_counter()
+            res = solver.solve_1(i)
+            t_end = time.perf_counter()
+        
     console.log("[green]Part 1 completed in ", (t_end - t_start), "seconds")
     console.log("[bold green] ", res)
     
-    with console.status("[blue]Solving part 2...", spinner="dots"):
+    if hasattr(solver, "_no_status_2"):
         t_start = time.perf_counter()
         res = solver.solve_2(i)
         t_end = time.perf_counter()
+    else:
+        with console.status("[blue]Solving part 2...", spinner="dots"):
+            t_start = time.perf_counter()
+            res = solver.solve_2(i)
+            t_end = time.perf_counter()
 
     console.log("[green]Part 2 completed in ", (t_end - t_start), "seconds")
     console.log("[bold green] ", res)
